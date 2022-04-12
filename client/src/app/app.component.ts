@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from 'src/_models/User';
+import { User } from 'src/app/_models/User';
 import { AccountService } from './_services/account.service';
 
 @Component({
@@ -19,5 +19,6 @@ export class AppComponent implements OnInit{
   }  
 setCurrentUser(){
   const user: User = JSON.parse(localStorage.getItem('user'));
+  this.accountService.setCurrentUser(user);
 }
 }

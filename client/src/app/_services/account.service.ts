@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import {map} from 'rxjs/operators';
-import { User } from 'src/_models/User';
+import { User } from 'src/app/_models/User';
+import { HomeComponent } from '../home/home.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -24,26 +25,27 @@ login(model:any)
     })
   ) 
 } 
-register(model: any)
-{
-  return this.http.post(this.baseurl + 'account/register', model).pipe( 
-    map((user: User) =>{
-      if(user){
-        localStorage.setItem('user', JSON.stringify(user));
-        this.currentUserSource.next(user);
-      }
-    
-    })
-  )
-  } 
+    register(model: any)
+    {
+      return this.http.post(this.baseurl + 'account/register', model).pipe( 
+        map((user: User) =>{
+          if(user){
+            localStorage.setItem('user', JSON.stringify(user));
+            this.currentUserSource.next(user);
+          }
+        
+        })
+      )
+      } 
 setCurrentUser(user: User)
 { this.currentUserSource.next(user);
-  this.currentUserSource.next(null);  
+  // this.currentUserSource.next(null);  
 }
 
 
 logout(){
   localStorage.removeItem('user');
-}
+  this.currentUserSource.next(null);  
+ }
 
 }
