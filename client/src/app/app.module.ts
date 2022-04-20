@@ -21,6 +21,8 @@ import { SharedModule } from './_modules/shared.module';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { MemberCardComponent } from './members/member-card/member-card.component';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 // import { ServerErrorComponent } from './errors/server-error/server-error.component';
 
 
@@ -36,6 +38,7 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
     MessagesComponent,
     TestErrorsComponent,
     NotFoundComponent,
+    MemberCardComponent,
     // ServerErrorComponent,
     
   ],
@@ -45,10 +48,10 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    SharedModule,
-    ToastrModule.forRoot({ positionClass:'toast-bottom-right'}) 
+    SharedModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+              { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true} ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
