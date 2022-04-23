@@ -20,8 +20,7 @@ login(model:any)
     map((response: User) =>{
       const user = response;
       if(user){
-        localStorage.setItem('user', JSON.stringify(user));
-        this.currentUserSource.next(user);
+        this.setCurrentUser(user);
       }
     })
   ) 
@@ -31,16 +30,15 @@ login(model:any)
       return this.http.post(this.baseurl + 'account/register', model).pipe( 
         map((user: User) =>{
           if(user){
-            localStorage.setItem('user', JSON.stringify(user));
-            this.currentUserSource.next(user);
+           this.setCurrentUser(user);
           }
         
         })
       )
       } 
 setCurrentUser(user: User)
-{ this.currentUserSource.next(user);
-  // this.currentUserSource.next(null);  
+{   localStorage.setItem('user', JSON.stringify(user));
+   this.currentUserSource.next(user);
 }
 
 

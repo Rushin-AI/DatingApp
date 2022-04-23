@@ -8,12 +8,15 @@ using API.Service;
 using Microsoft.EntityFrameworkCore;
 using API.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using API.Services;
 
 namespace API.Extensions
 {
     public static  class ApplicationSeviceExtensions
     {  public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
-         {   services.AddScoped<ITokenService, TokenService>();
+         {   services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+             services.AddScoped<ITokenService, TokenService>();
+             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options =>{
